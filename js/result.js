@@ -74,7 +74,9 @@ function renderResult(result) {
   }
 
   // シェア用テキストを先に作成（ボタンに渡すため）
-  const shareText = buildShareText(animal, lp, behavior);
+  // X は文字数制約があるため、ハッシュタグを短縮した版も用意する
+  const shareText      = buildShareText(animal, lp, behavior);
+  const shareTextForX  = buildShareText(animal, lp, behavior, { shortHashtags: true });
 
   const main = document.getElementById('resultMain');
   main.innerHTML = `
@@ -123,6 +125,7 @@ function renderResult(result) {
       <button class="btn-share btn-threads" id="shareThreads">
         Threads でシェア
       </button>
+      <p class="threads-note">※ コピー後、Threads画面で貼り付けて投稿してください</p>
       <button class="btn-share btn-x" id="shareX">
         𝕏（Twitter）でシェア
       </button>
@@ -145,8 +148,8 @@ function renderResult(result) {
 
   `;
 
-  // シェアボタンのイベント登録
-  bindShareButtons(shareText);
+  // シェアボタンのイベント登録（X 用は短縮版を渡す）
+  bindShareButtons(shareText, shareTextForX);
   // トップへ戻るボタンのイベント登録
   bindTopButton();
 }
@@ -208,7 +211,13 @@ function renderNoData() {
  *
  *   #うちの子アニマル診断 #育児 #子育て #ママ #パパ
  */
-function buildShareText(animal, lp, behavior) {
+function buildShareText(animal, lp, behavior, options) {
+  options = options || {};
+  // X 等の文字数制約が厳しい媒体向けに、ハッシュタグを最小限に切り替える
+  const hashtags = options.shortHashtags
+    ? `#うちの子アニマル診断`
+    : `#うちの子アニマル診断 #育児 #子育て #ママ #パパ`;
+
   // 本質説明文の2行目（空行を除いた2番目の行）を取得
   const descLines  = animal.description.split('\n').filter(function(l) { return l.trim() !== ''; });
   const secondLine = descLines[1] || '';
@@ -225,7 +234,7 @@ function buildShareText(animal, lp, behavior) {
     `【うちの子アニマル診断】`,
     `https://billy-sns.github.io/uchinoko-animal-shindan2/`,
     ``,
-    `#うちの子アニマル診断 #育児 #子育て #ママ #パパ`,
+    hashtags,
   ].join('\n');
 }
 
@@ -235,31 +244,37 @@ function buildShareText(animal, lp, behavior) {
  *   X        → twitter.com の投稿画面へ遷移
  *   コピー   → クリップボードにコピー
  */
-function bindShareButtons(shareText) {
+function bindShareButtons(shareText, shareTextForX) {
   const threadsBtn = document.getElementById('shareThreads');
   const xBtn       = document.getElementById('shareX');
   const copyBtn    = document.getElementById('shareCopy');
 
-  // URLSearchParams で text パラメータを明示的にUTF-8でエンコード
-  // 絵文字（サロゲートペア）や改行を含むテキストでも安全に組み立てるため
-  const buildIntentUrl = function(base) {
-    const params = new URLSearchParams();
-    params.set('text', shareText);
-    return base + '?' + params.toString();
-  };
+  // X 用のテキストが未指定なら通常テキストを使う（後方互換）
+  shareTextForX = shareTextForX || shareText;
 
-  // Threads（シェアテキストにURLを含むため text のみ渡す）
+  // Threads は intent/post?text= のクエリ経由だと絵文字（サロゲートペア）が
+  // 文字化けする既知の問題があるため、シェアテキストを clipboard にコピー
+  // してから空の投稿画面を開き、ユーザーに貼り付けてもらう方式にしている。
+  // ボタン直下の注意書きで導線を案内しているためトーストは出さない。
+  //
+  // 重要：window.open を copyToClipboard より前 or 直後に呼ぶと、フォーカスが
+  // 新タブに奪われて writeText の Promise が reject → fallbackCopy(execCommand)
+  // にフォールスルーして絵文字が化ける。Promise の完了を待ってから開くこと。
   if (threadsBtn) {
     threadsBtn.addEventListener('click', function() {
-      const threadsUrl = buildIntentUrl('https://www.threads.net/intent/post');
-      window.open(threadsUrl, '_blank', 'noopener,noreferrer');
+      copyToClipboard(shareText).then(function() {
+        window.open('https://www.threads.net/intent/post', '_blank', 'noopener,noreferrer');
+      });
     });
   }
 
-  // X（Twitter）
+  // X（Twitter）は intent/tweet?text= で絵文字も正しく扱える。
+  // 文字数制約があるためハッシュタグ短縮版（shareTextForX）を使用。
   if (xBtn) {
     xBtn.addEventListener('click', function() {
-      const twitterUrl = buildIntentUrl('https://twitter.com/intent/tweet');
+      const params = new URLSearchParams();
+      params.set('text', shareTextForX);
+      const twitterUrl = 'https://twitter.com/intent/tweet?' + params.toString();
       window.open(twitterUrl, '_blank', 'noopener,noreferrer');
     });
   }
@@ -273,14 +288,22 @@ function bindShareButtons(shareText) {
   }
 }
 
-/** テキストをクリップボードにコピーする */
+/**
+ * テキストをクリップボードにコピーする（Promise を返す）
+ *
+ * navigator.clipboard.writeText は非同期。直後に window.open など
+ * フォーカスを奪う操作をすると Promise が reject されてフォールバックの
+ * execCommand 経由になり、絵文字（サロゲートペア）が化けるケースがあるため、
+ * 呼び出し側で .then() でコピー完了を待てるよう Promise を返す形にしている。
+ */
 function copyToClipboard(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).catch(function() {
+    return navigator.clipboard.writeText(text).catch(function() {
       fallbackCopy(text);
     });
   } else {
     fallbackCopy(text);
+    return Promise.resolve();
   }
 }
 
