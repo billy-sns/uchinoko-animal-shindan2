@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>うちの子アニマル診断｜お子さんのトリセツを見つけよう</title>
+  <meta name="description" content="生年月日と7つの質問で、うちの子の性格・気質を12種類の動物キャラクターで診断。2歳〜未就学児のママパパへ、子どもの個性を知るヒントを。">
+
+  <!-- OGP -->
+  <meta property="og:title" content="うちの子アニマル診断">
+  <meta property="og:description" content="うちの子のトリセツを見つけよう。生年月日と7問で、お子さんの個性を12種類の動物で診断！">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="./assets/ogp.png">
+
+  <!-- Google Fonts（丸みのあるフォント） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/style.css">
+
+  <style>
+    /* ── index.html 専用スタイル ── */
+
+    /* ヒーローセクション */
+    .hero {
+      text-align: center;
+      padding: 32px 20px 28px;
+      background: linear-gradient(160deg, #FFD6E0 0%, #FFF0A0 50%, #C8F0E0 100%);
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-animals {
+      font-size: 2.2rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .hero-title {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .hero-sub {
+      font-size: 0.82rem;
+      color: var(--color-text);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    /* 3軸の説明カード */
+    .axis-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .axis-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+    }
+
+    .axis-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .axis-text-wrap {}
+
+    .axis-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: #FFE0E8;
+      color: #D6406E;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .axis-label.lp     { background: #E8E0FF; color: #6B3FA0; }
+    .axis-label.kodo   { background: #E0F4FF; color: #1A6FA0; }
+
+    .axis-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 2px;
+    }
+
+    .axis-desc {
+      font-size: 0.78rem;
+      color: var(--color-text-sub);
+      line-height: 1.5;
+    }
+
+    /* 動物一覧 */
+    .animals-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .animal-chip {
+      text-align: center;
+      padding: 10px 4px;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      font-size: 0.7rem;
+      color: var(--color-text);
+      line-height: 1.4;
+    }
+
+    .animal-chip-emoji {
+      font-size: 1.6rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* 免責表記 */
+    .disclaimer {
+      font-size: 0.72rem;
+      color: var(--color-text-sub);
+      background: #F5F5F5;
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      line-height: 1.7;
+      margin-top: 8px;
+    }
+
+    /* スタートボタンは固定表示 */
+    .start-btn-wrap {
+      margin-top: 24px;
+    }
+
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .steps-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--color-text);
+    }
+
+    .step-num {
+      width: 24px;
+      height: 24px;
+      background: var(--color-primary);
+      color: white;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- ヘッダー -->
+    <header class="site-header">
+      <div class="site-title">🐾 うちの子アニマル診断</div>
+      <div class="site-subtitle">お子さんのトリセツを見つけよう</div>
+    </header>
+
+    <main>
+
+      <!-- ヒーロー -->
+      <section class="hero fade-in-up">
+        <div class="hero-animals">🐶🐱🐰🦁🦊🐼<br>🐒🐿️🦉🦔🦦🐧</div>
+        <h1 class="hero-title">うちの子、どのアニマル？</h1>
+        <p class="hero-sub">
+          生年月日と7つの質問で<br>
+          <strong>お子さんの個性・本質・行動パターン</strong>を<br>
+          12種類の動物キャラクターで診断します🌟
+        </p>
+        <a href="./shindan.html" class="btn btn-primary">
+          🔍 今すぐ診断スタート
+        </a>
+      </section>
+
+      <!-- 3つの軸 -->
+      <section class="card fade-in-up">
+        <div class="card-title">✨ 3つの軸で診断します</div>
+        <div class="axis-cards">
+
+          <div class="axis-card">
+            <div class="axis-icon">🌟</div>
+            <div class="axis-text-wrap">
+              <span class="axis-label">本質</span>
+              <div class="axis-title">四柱推命・十二運星</div>
+              <div class="axis-desc">生年月日から「生まれ持った気質」を判定。古来から伝わる東洋の智慧をベースに独自アレンジ。</div>
+            </div>
+          </div>
+
+          <div class="axis-card">
+            <div class="axis-icon">✨</div>
+            <div class="axis-text-wrap">
+              <span class="axis-label lp">隠れた数字</span>
+              <div class="axis-title">数秘術・ライフパスナンバー</div>
+              <div class="axis-desc">生年月日の数字の合計から「人生のテーマ」を読み解く西洋の知恵。</div>
+            </div>
+          </div>
+
+          <div class="axis-card">
+            <div class="axis-icon">🎯</div>
+            <div class="axis-text-wrap">
+              <span class="axis-label kodo">行動</span>
+              <div class="axis-title">7つの質問</div>
+              <div class="axis-desc">日常のお子さんの様子を答えて「実際の行動パターン」を判定。</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 12種類の動物 -->
+      <section class="card fade-in-up">
+        <div class="card-title">🐾 12種類のアニマルキャラ</div>
+        <div class="animals-grid">
+          <div class="animal-chip"><span class="animal-chip-emoji">🐶</span>げんきなイヌ</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🐱</span>マイペースなネコ</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🐰</span>やさしいウサギ</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🦁</span>どうどうライオン</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🦊</span>しっかりキツネ</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🐼</span>ふんわりパンダ</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🐒</span>わくわくサル</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🐿️</span>ひらめきリス</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🦉</span>かしこいフクロウ</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🦔</span>じっくりハリネズミ</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🦦</span>のんびりラッコ</div>
+          <div class="animal-chip"><span class="animal-chip-emoji">🐧</span>なかよしペンギン</div>
+        </div>
+        <p style="font-size:0.78rem;color:var(--color-text-sub);text-align:center;margin-top:4px;">
+          3軸の組み合わせでお子さんのトリセツが見つかる
+        </p>
+      </section>
+
+      <!-- 使い方ステップ -->
+      <section class="card fade-in-up">
+        <div class="card-title">📋 使い方（所要時間：約2分）</div>
+        <ul class="steps-list">
+          <li>
+            <span class="step-num">1</span>
+            <span>子どもの<strong>生年月日</strong>を入力する</span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span><strong>7つの質問</strong>に答える</span>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span><strong>うちの子トリセツ</strong>が完成！SNSでシェア🎉</span>
+          </li>
+        </ul>
+        <div class="start-btn-wrap">
+          <a href="./shindan.html" class="btn btn-primary">
+            🔍 診断スタート（無料）
+          </a>
+        </div>
+      </section>
+
+      <!-- 免責・注意事項 -->
+      <div class="disclaimer">
+        <strong>※ 本診断について</strong><br>
+        この診断結果は、お子さんの本質を正確に言い当てるものではありません。<br>
+        四柱推命と数秘術をもとに、お子さんの傾向を統計的に読み解いた内容です。<br>
+        育児の参考やコミュニケーションのきっかけとしてお楽しみください。<br>
+        <br>
+        なお、他の動物占いや個性診断サービスとは一切関係ありません。<br>
+        <br>
+        ※ 四柱推命をベースに独自アレンジ。節入りにより月初め前後数日で結果が異なる場合があります。
+      </div>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="site-footer">
+      <p>© 2026 うちの子アニマル診断</p>
+      <p class="mt-8">
+        ママ・パパ自身の診断は
+        <a href="https://billy-sns.github.io/ikuji-animal-shindan/" target="_blank" rel="noopener">
+          育児アニマル診断
+        </a>
+        へ
+      </p>
+    </footer>
+
+  </div><!-- /page-wrapper -->
+
+</body>
+</html>

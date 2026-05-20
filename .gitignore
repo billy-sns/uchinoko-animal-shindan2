@@ -1,0 +1,9 @@
+# 作業用zip（公開不要）
+files.zip
+
+# OS / エディタ
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

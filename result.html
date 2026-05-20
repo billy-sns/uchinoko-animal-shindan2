@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>診断結果｜うちの子アニマル診断</title>
+  <meta name="robots" content="noindex"><!-- 個人の診断結果ページはインデックス不要 -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/style.css">
+
+  <style>
+    /* ── result.html 専用スタイル ── */
+
+    /* ページタイトル */
+    .result-page-title {
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 16px;
+      letter-spacing: 0.05em;
+    }
+
+    /* 本質カード（動物） */
+    .honshitsu-card {
+      background: linear-gradient(160deg, #FFD6E0 0%, #FFFFFF 60%);
+      border: 1.5px solid #FADADD;
+      border-radius: var(--radius-lg);
+      padding: 24px 20px;
+      text-align: center;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .honshitsu-emoji {
+      font-size: 5rem;
+      line-height: 1;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .honshitsu-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 4px;
+    }
+
+    .honshitsu-jusei {
+      font-size: 0.72rem;
+      color: var(--color-text-sub);
+      margin-bottom: 12px;
+    }
+
+    .result-description {
+      font-size: 0.88rem;
+      line-height: 1.95;
+      color: var(--color-text);
+      white-space: pre-line;
+      text-align: left;
+    }
+
+    /* LPカード */
+    .lp-card {
+      background: linear-gradient(160deg, #EDE0FF 0%, #FFFFFF 60%);
+      border: 1.5px solid #D8C8F0;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lp-number-badge {
+      display: inline-block;
+      background: var(--color-lavender);
+      color: #4B2090;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: var(--radius-full);
+      margin-bottom: 8px;
+    }
+
+    .lp-keyword {
+      font-size: 0.78rem;
+      color: #6B3FA0;
+      margin-bottom: 12px;
+    }
+
+    .master-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* 行動タイプカード */
+    .behavior-card {
+      background: linear-gradient(160deg, #D6F0FF 0%, #FFFFFF 60%);
+      border: 1.5px solid #B8DFEF;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .behavior-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1A6FA0;
+      margin-bottom: 4px;
+    }
+
+    .behavior-axis {
+      font-size: 0.72rem;
+      color: var(--color-text-sub);
+      margin-bottom: 12px;
+    }
+
+    /* 共通メッセージ */
+    .message-box {
+      background: linear-gradient(135deg, #FFFADB, #FFFDF0);
+      border: 2px solid var(--color-yellow);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .message-box p {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--color-text);
+    }
+
+    /* シェアボタンセクション */
+    .share-section {
+      margin-bottom: 20px;
+    }
+
+    .share-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    /* 導線セクション */
+    .cta-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .cta-card {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid;
+    }
+
+    .cta-card.line {
+      background: #F0FFF5;
+      border-color: #06C755;
+    }
+
+    .cta-card.note {
+      background: #FFF5F0;
+      border-color: #FF6633;
+    }
+
+    .cta-card.parent {
+      background: #F5F0FF;
+      border-color: var(--color-lavender);
+    }
+
+    .cta-icon {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    .cta-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--color-text);
+    }
+
+    .cta-desc {
+      font-size: 0.78rem;
+      color: var(--color-text-sub);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: white;
+    }
+
+    .cta-btn.green  { background: #06C755; }
+    .cta-btn.orange { background: #FF6633; }
+    .cta-btn.purple { background: #7B52AB; }
+
+    /* もう一度診断 */
+    .retry-btn-wrap {
+      margin-bottom: 16px;
+    }
+
+    /* エラー表示（データなし） */
+    .no-data-msg {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .no-data-msg p {
+      font-size: 0.9rem;
+      color: var(--color-text-sub);
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    /* ローディング */
+    .loading-wrap {
+      text-align: center;
+      padding: 60px 20px;
+      font-size: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- ヘッダー -->
+    <header class="site-header site-header--linked">
+      <a href="./index.html" class="site-header-link">
+        <div class="site-title">🐾 うちの子アニマル診断</div>
+        <div class="site-subtitle">診断結果</div>
+      </a>
+    </header>
+
+    <main id="resultMain">
+      <!-- result.js が描画 -->
+      <div class="loading-wrap">🔮</div>
+    </main>
+
+  </div><!-- /page-wrapper -->
+
+  <script src="./js/data.js"></script>
+  <script src="./js/logic.js"></script>
+  <script src="./js/result.js"></script>
+
+</body>
+</html>

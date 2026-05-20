@@ -1,0 +1,529 @@
+/* ============================================================
+   style.css
+   うちの子アニマル診断 - 全ページ共通スタイル
+   モバイルファースト設計（基準幅: 390px）
+   ============================================================ */
+
+/* ── CSS変数（カラーパレット・フォント） ── */
+:root {
+  /* パステルカラー */
+  --color-bg:       #FFF9F5;   /* ページ背景：温かみのあるオフホワイト */
+  --color-primary:  #FF8FAB;   /* メインピンク */
+  --color-secondary:#FFB347;   /* アクセントオレンジ */
+  --color-accent:   #A8D8EA;   /* ライトブルー */
+  --color-mint:     #B5EAD7;   /* ミント */
+  --color-lavender: #C9B1E8;   /* ラベンダー */
+  --color-yellow:   #FFEAA7;   /* やさしいイエロー */
+
+  /* テキスト */
+  --color-text:     #4A4A4A;   /* 本文テキスト */
+  --color-text-sub: #888888;   /* サブテキスト */
+  --color-white:    #FFFFFF;
+
+  /* カード・ボーダー */
+  --color-card:     #FFFFFF;
+  --color-border:   #FADADD;   /* うすいピンクボーダー */
+
+  /* 丸みの基本値 */
+  --radius-sm:  8px;
+  --radius-md:  16px;
+  --radius-lg:  24px;
+  --radius-full: 9999px;
+
+  /* シャドウ */
+  --shadow-sm:  0 2px 8px rgba(255,143,171,0.15);
+  --shadow-md:  0 4px 16px rgba(255,143,171,0.20);
+
+  /* フォント */
+  --font-main: 'Noto Sans JP', 'Hiragino Maru Gothic ProN', 'ヒラギノ丸ゴ ProN W4', sans-serif;
+}
+
+/* ── リセット・ベース ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ── レイアウト ── */
+.page-wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+/* ── ヘッダー ── */
+
+/* shindan・result ページ用：ヘッダー全体をクリッカブルにする */
+.site-header--linked {
+  cursor: pointer;
+}
+
+/* ヘッダー内のリンク：テキスト装飾をリセットし、ホバーで薄くする */
+.site-header-link {
+  display: block;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.site-header-link:hover {
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+/* トップへ戻るボタン */
+.btn-to-top {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  min-height: 44px;           /* スマホでのタップ領域を確保 */
+  background: #F5F0FF;
+  color: #7B52AB;
+  border: 2px solid var(--color-lavender);
+  border-radius: var(--radius-full);
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.1s ease;
+  -webkit-appearance: none;
+}
+
+.btn-to-top:hover {
+  background: #EDE0FF;
+  text-decoration: none;
+}
+
+.btn-to-top:active {
+  transform: scale(0.97);
+}
+
+.back-to-top-wrap {
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.site-header {
+  text-align: center;
+  padding: 24px 16px 16px;
+  background: linear-gradient(135deg, #FFD6E0 0%, #FFF0F3 100%);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.site-header .site-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+}
+
+.site-header .site-subtitle {
+  font-size: 0.8rem;
+  color: var(--color-text-sub);
+  margin-top: 4px;
+}
+
+/* ── カード ── */
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── ボタン ── */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  -webkit-appearance: none;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary), #FF6B9D);
+  color: var(--color-white);
+  box-shadow: 0 4px 12px rgba(255,107,157,0.35);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 16px rgba(255,107,157,0.45);
+  text-decoration: none;
+}
+
+.btn-secondary {
+  background: var(--color-white);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn-secondary:hover {
+  background: #FFF0F3;
+  text-decoration: none;
+}
+
+.btn-share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-main);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn-share:active { transform: scale(0.97); }
+
+.btn-threads {
+  background: #000000;
+  color: #FFFFFF;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.btn-x {
+  background: #1DA1F2;
+  color: #FFFFFF;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.btn-copy {
+  background: #F0F0F0;
+  color: #333333;
+  width: 100%;
+  border: 1.5px solid #CCCCCC;
+}
+
+/* ── 絵文字アイコン（大） ── */
+.emoji-lg {
+  font-size: 3.5rem;
+  line-height: 1;
+  display: block;
+  text-align: center;
+  margin: 8px 0;
+}
+
+.emoji-md {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+/* ── セクション見出し ── */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+
+.label-honshitsu  { background: #FFE0E8; color: #D6406E; }
+.label-lp         { background: #E8E0FF; color: #6B3FA0; }
+.label-behavior   { background: #E0F4FF; color: #1A6FA0; }
+.label-message    { background: var(--color-yellow); color: #7A6000; }
+
+/* ── プログレスバー ── */
+.progress-wrap {
+  margin-bottom: 20px;
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  color: var(--color-text-sub);
+  text-align: right;
+  margin-bottom: 6px;
+}
+
+.progress-bar-bg {
+  background: #FADADD;
+  border-radius: var(--radius-full);
+  height: 8px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+/* ── フォーム ── */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.form-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  background: var(--color-white);
+  color: var(--color-text);
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FF8FAB' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(255,143,171,0.2);
+}
+
+/* 生年月日：年月日を横並びに */
+.birthday-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.birthday-row .form-select {
+  flex: 1;
+}
+
+.birthday-sep {
+  font-size: 1rem;
+  color: var(--color-text-sub);
+  flex-shrink: 0;
+}
+
+/* ── 質問カード ── */
+.question-card {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+}
+
+.question-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: #FFE0E8;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.question-text {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  color: var(--color-text);
+}
+
+/* 選択肢ボタン */
+.options-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+  -webkit-appearance: none;
+}
+
+.option-btn:hover {
+  border-color: var(--color-primary);
+  background: #FFF5F8;
+}
+
+.option-btn.selected {
+  border-color: var(--color-primary);
+  background: #FFE8EF;
+  font-weight: 700;
+}
+
+.option-btn:active {
+  transform: scale(0.98);
+}
+
+/* ── 結果ページ ── */
+.result-animal-header {
+  text-align: center;
+  padding: 24px 20px;
+  background: linear-gradient(135deg, #FFD6E0 0%, #FFF9F5 100%);
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.result-animal-emoji {
+  font-size: 5rem;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.result-animal-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.result-description {
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: var(--color-text);
+  white-space: pre-line; /* 改行をそのまま反映 */
+  margin-top: 8px;
+}
+
+/* 共通メッセージ枠 */
+.message-box {
+  background: linear-gradient(135deg, #FFF9E0, #FFFDF5);
+  border: 2px solid var(--color-yellow);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.message-box p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--color-text);
+}
+
+/* 導線カード */
+.cta-card {
+  background: linear-gradient(135deg, #F0F9FF, #E8F4FF);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 12px;
+}
+
+.cta-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1A6FA0;
+  margin-bottom: 8px;
+}
+
+/* ── フッター ── */
+.site-footer {
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 0.75rem;
+  color: var(--color-text-sub);
+  line-height: 1.8;
+}
+
+.site-footer a {
+  color: var(--color-text-sub);
+}
+
+/* ── アニメーション ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.4s ease both;
+}
+
+/* ── ユーティリティ ── */
+.text-center { text-align: center; }
+.mt-8  { margin-top: 8px;  }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mb-8  { margin-bottom: 8px;  }
+.mb-16 { margin-bottom: 16px; }
+.hidden { display: none !important; }
