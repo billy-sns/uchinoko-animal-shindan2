@@ -7,3 +7,6 @@ Thumbs.db
 *.swp
 .vscode/
 .idea/
+
+# Claude Code のローカル設定
+.claude/
