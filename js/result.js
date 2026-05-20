@@ -19,6 +19,15 @@
 // ANIMAL_TYPES / LP_TYPES / BEHAVIOR_TYPES は data.js が同じグローバルスコープで宣言済み
 // ここで再宣言すると SyntaxError になるため、関数内で window.UCHINOKO 経由で参照する
 
+/**
+ * 現在の端末がモバイル（スマホ/タブレット）かどうかを userAgent で判定する。
+ * - スマホでは Threads intent/post?text= で絵文字化けが発生しないため URL 方式を使う
+ * - PC では URL 方式だと絵文字が化けるためクリップボード方式に切り替える
+ */
+function isMobileDevice() {
+  return /iPhone|iPad|iPod|Android|Mobile/i.test(navigator.userAgent || '');
+}
+
 // ============================================================
 // ページ読み込み時に実行
 // ============================================================
@@ -125,7 +134,7 @@ function renderResult(result) {
       <button class="btn-share btn-threads" id="shareThreads">
         Threads でシェア
       </button>
-      <p class="threads-note">※ コピー後、Threads画面で貼り付けて投稿してください</p>
+      ${isMobileDevice() ? '' : '<p class="threads-note">※ コピー後、Threads画面で貼り付けて投稿してください</p>'}
       <button class="btn-share btn-x" id="shareX">
         𝕏（Twitter）でシェア
       </button>
@@ -252,19 +261,29 @@ function bindShareButtons(shareText, shareTextForX) {
   // X 用のテキストが未指定なら通常テキストを使う（後方互換）
   shareTextForX = shareTextForX || shareText;
 
-  // Threads は intent/post?text= のクエリ経由だと絵文字（サロゲートペア）が
-  // 文字化けする既知の問題があるため、シェアテキストを clipboard にコピー
-  // してから空の投稿画面を開き、ユーザーに貼り付けてもらう方式にしている。
-  // ボタン直下の注意書きで導線を案内しているためトーストは出さない。
+  // Threads は intent/post?text= のクエリ経由だと PC ブラウザで絵文字
+  // （サロゲートペア）が文字化けする既知の問題があるため、PC ではシェアテキスト
+  // を clipboard にコピーしてから空の投稿画面を開く方式にしている。
+  // スマホでは URL 方式でも絵文字化けが起きないため、従来通り text パラメータ
+  // 付きで投稿画面を開いてワンタップで投稿できるようにしている。
   //
-  // 重要：window.open を copyToClipboard より前 or 直後に呼ぶと、フォーカスが
-  // 新タブに奪われて writeText の Promise が reject → fallbackCopy(execCommand)
-  // にフォールスルーして絵文字が化ける。Promise の完了を待ってから開くこと。
+  // PC 方式での注意：window.open を copyToClipboard より前 or 直後に呼ぶと、
+  // フォーカスが新タブに奪われて writeText の Promise が reject → fallbackCopy
+  // (execCommand) にフォールスルーして絵文字が化ける。Promise の完了を待つこと。
   if (threadsBtn) {
     threadsBtn.addEventListener('click', function() {
-      copyToClipboard(shareText).then(function() {
-        window.open('https://www.threads.net/intent/post', '_blank', 'noopener,noreferrer');
-      });
+      if (isMobileDevice()) {
+        // スマホ：URL 方式で投稿画面にテキストを乗せて開く
+        const params = new URLSearchParams();
+        params.set('text', shareText);
+        const threadsUrl = 'https://www.threads.net/intent/post?' + params.toString();
+        window.open(threadsUrl, '_blank', 'noopener,noreferrer');
+      } else {
+        // PC：clipboard にコピーしてから空の投稿画面を開く
+        copyToClipboard(shareText).then(function() {
+          window.open('https://www.threads.net/intent/post', '_blank', 'noopener,noreferrer');
+        });
+      }
     });
   }
 
