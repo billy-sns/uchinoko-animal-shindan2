@@ -204,7 +204,7 @@ function renderNoData() {
  *   🎯 行動：{行動タイプ名}
  *
  *   【うちの子アニマル診断】
- *   https://billy-sns.github.io/uchinoko-animal-shindan/
+ *   https://billy-sns.github.io/uchinoko-animal-shindan2/
  *
  *   #うちの子アニマル診断 #育児 #子育て #ママ #パパ
  */
@@ -223,7 +223,7 @@ function buildShareText(animal, lp, behavior) {
     `🎯 行動：${behavior.name}`,
     ``,
     `【うちの子アニマル診断】`,
-    `https://billy-sns.github.io/uchinoko-animal-shindan/`,
+    `https://billy-sns.github.io/uchinoko-animal-shindan2/`,
     ``,
     `#うちの子アニマル診断 #育児 #子育て #ママ #パパ`,
   ].join('\n');
@@ -240,11 +240,18 @@ function bindShareButtons(shareText) {
   const xBtn       = document.getElementById('shareX');
   const copyBtn    = document.getElementById('shareCopy');
 
+  // URLSearchParams で text パラメータを明示的にUTF-8でエンコード
+  // 絵文字（サロゲートペア）や改行を含むテキストでも安全に組み立てるため
+  const buildIntentUrl = function(base) {
+    const params = new URLSearchParams();
+    params.set('text', shareText);
+    return base + '?' + params.toString();
+  };
+
   // Threads（シェアテキストにURLを含むため text のみ渡す）
   if (threadsBtn) {
     threadsBtn.addEventListener('click', function() {
-      const threadsUrl =
-        'https://www.threads.net/intent/post?text=' + encodeURIComponent(shareText);
+      const threadsUrl = buildIntentUrl('https://www.threads.net/intent/post');
       window.open(threadsUrl, '_blank', 'noopener,noreferrer');
     });
   }
@@ -252,8 +259,7 @@ function bindShareButtons(shareText) {
   // X（Twitter）
   if (xBtn) {
     xBtn.addEventListener('click', function() {
-      const twitterUrl =
-        'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
+      const twitterUrl = buildIntentUrl('https://twitter.com/intent/tweet');
       window.open(twitterUrl, '_blank', 'noopener,noreferrer');
     });
   }
