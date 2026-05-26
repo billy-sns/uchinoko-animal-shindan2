@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css?v=1">
 
   <style>
     /* ── index.html 専用スタイル ── */
@@ -34,10 +34,30 @@
     }
 
     .hero-animals {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px 4px;
+      max-width: 320px;
+      margin: 0 auto 12px;
+      justify-items: center;
+    }
+
+    /* ヒーロー動物帯の各アイコン（画像＋絵文字フォールバック） */
+    .hero-animal {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-animal-img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .hero-animal-emoji {
       font-size: 2.2rem;
-      letter-spacing: 0.1em;
-      margin-bottom: 12px;
-      line-height: 1.4;
+      line-height: 1;
     }
 
     .hero-title {
@@ -135,6 +155,15 @@
       margin-bottom: 4px;
     }
 
+    /* 12種類グリッドの動物画像（絵文字に代わるアイコン） */
+    .animal-chip-img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 4px;
+    }
+
     /* 免責表記 */
     .disclaimer {
       font-size: 0.72rem;
@@ -196,7 +225,20 @@
 
       <!-- ヒーロー -->
       <section class="hero fade-in-up">
-        <div class="hero-animals">🐶🐱🐰🦁🦊🐼<br>🐒🐿️🦉🦔🦦🐧</div>
+        <div class="hero-animals">
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/dog.png" alt="げんきなイヌ" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🐶</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/cat.png" alt="マイペースなネコ" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🐱</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/rabbit.png" alt="やさしいウサギ" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🐰</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/lion.png" alt="どうどうライオン" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🦁</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/fox.png" alt="しっかりキツネ" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🦊</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/panda.png" alt="ふんわりパンダ" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🐼</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/monkey.png" alt="わくわくサル" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🐒</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/squirrel.png" alt="ひらめきリス" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🐿️</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/owl.png" alt="かしこいフクロウ" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🦉</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/hedgehog.png" alt="じっくりハリネズミ" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🦔</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/otter.png" alt="のんびりラッコ" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🦦</span></span>
+          <span class="hero-animal"><img class="hero-animal-img" src="./images/penguin.png" alt="なかよしペンギン" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-block';"><span class="hero-animal-emoji" style="display:none;">🐧</span></span>
+        </div>
         <h1 class="hero-title">うちの子、どのアニマル？</h1>
         <p class="hero-sub">
           生年月日と7つの質問で<br>
@@ -247,18 +289,18 @@
       <section class="card fade-in-up">
         <div class="card-title">🐾 12種類のアニマルキャラ</div>
         <div class="animals-grid">
-          <div class="animal-chip"><span class="animal-chip-emoji">🐶</span>げんきなイヌ</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🐱</span>マイペースなネコ</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🐰</span>やさしいウサギ</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🦁</span>どうどうライオン</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🦊</span>しっかりキツネ</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🐼</span>ふんわりパンダ</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🐒</span>わくわくサル</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🐿️</span>ひらめきリス</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🦉</span>かしこいフクロウ</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🦔</span>じっくりハリネズミ</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🦦</span>のんびりラッコ</div>
-          <div class="animal-chip"><span class="animal-chip-emoji">🐧</span>なかよしペンギン</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/dog.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🐶</span>げんきなイヌ</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/cat.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🐱</span>マイペースなネコ</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/rabbit.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🐰</span>やさしいウサギ</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/lion.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🦁</span>どうどうライオン</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/fox.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🦊</span>しっかりキツネ</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/panda.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🐼</span>ふんわりパンダ</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/monkey.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🐒</span>わくわくサル</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/squirrel.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🐿️</span>ひらめきリス</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/owl.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🦉</span>かしこいフクロウ</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/hedgehog.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🦔</span>じっくりハリネズミ</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/otter.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🦦</span>のんびりラッコ</div>
+          <div class="animal-chip"><img class="animal-chip-img" src="./images/penguin.png" alt="" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';"><span class="animal-chip-emoji" style="display:none;">🐧</span>なかよしペンギン</div>
         </div>
         <p style="font-size:0.78rem;color:var(--color-text-sub);text-align:center;margin-top:4px;">
           3軸の組み合わせでお子さんのトリセツが見つかる

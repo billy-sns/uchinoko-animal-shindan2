@@ -95,7 +95,9 @@ function renderResult(result) {
     <!-- ===== 軸1：本質（アニマルタイプ） ===== -->
     <div class="honshitsu-card fade-in-up">
       <span class="section-label label-honshitsu">🌟 本質</span>
-      <div class="honshitsu-emoji">${animal.emoji}</div>
+      <img class="honshitsu-image" src="${animal.image}" alt="${escapeHtml(animal.name)}"
+           onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';">
+      <div class="honshitsu-emoji" style="display:none;">${animal.emoji}</div>
       <div class="honshitsu-name">${animal.name}</div>
       <p class="result-description">${escapeHtml(animal.description)}</p>
     </div>

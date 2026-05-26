@@ -28,6 +28,7 @@ const ANIMAL_TYPES = {
     id: 1,
     name: 'かしこいフクロウ',
     emoji: '🦉',
+    image: './images/owl.png',
     unsei: '死', // 内部データ（UIには表示しない）
     description: `あなたのお子さんはかしこいフクロウ。
 じっと見て、深く考える、もの静かで頭の良い子。
@@ -66,6 +67,7 @@ const ANIMAL_TYPES = {
     id: 2,
     name: 'やさしいウサギ',
     emoji: '🐰',
+    image: './images/rabbit.png',
     unsei: '病',
     description: `あなたのお子さんはやさしいウサギ。
 人の気持ちを敏感に感じ取る、心の優しい子。
@@ -104,6 +106,7 @@ const ANIMAL_TYPES = {
     id: 3,
     name: 'げんきなイヌ',
     emoji: '🐶',
+    image: './images/dog.png',
     unsei: '長生',
     description: `あなたのお子さんはげんきなイヌ。
 笑顔いっぱい、エネルギーあふれる元気な子。
@@ -140,6 +143,7 @@ const ANIMAL_TYPES = {
     id: 4,
     name: 'マイペースなネコ',
     emoji: '🐱',
+    image: './images/cat.png',
     unsei: '沐浴',
     description: `あなたのお子さんはマイペースなネコ。
 自分の世界を大切にする、自由な心を持つ子。
@@ -177,6 +181,7 @@ const ANIMAL_TYPES = {
     id: 5,
     name: 'しっかりキツネ',
     emoji: '🦊',
+    image: './images/fox.png',
     unsei: '冠帯',
     description: `あなたのお子さんはしっかりキツネ。
 自分のスタイルを持つ、賢くて凛々しい子。
@@ -216,6 +221,7 @@ const ANIMAL_TYPES = {
     id: 6,
     name: 'なかよしペンギン',
     emoji: '🐧',
+    image: './images/penguin.png',
     unsei: '建禄',
     description: `あなたのお子さんはなかよしペンギン。
 仲間と協力するのが大好きな、誠実で頼れる子。
@@ -254,6 +260,7 @@ const ANIMAL_TYPES = {
     id: 7,
     name: 'じっくりハリネズミ',
     emoji: '🦔',
+    image: './images/hedgehog.png',
     unsei: '墓',
     description: `あなたのお子さんはじっくりハリネズミ。
 よく見て、よく考える、観察上手な子。
@@ -292,6 +299,7 @@ const ANIMAL_TYPES = {
     id: 8,
     name: 'のんびりラッコ',
     emoji: '🦦',
+    image: './images/otter.png',
     unsei: '衰',
     description: `あなたのお子さんはのんびりラッコ。
 自分のペースで、穏やかに過ごす優しい子。
@@ -332,6 +340,7 @@ const ANIMAL_TYPES = {
     id: 9,
     name: 'わくわくサル',
     emoji: '🐒',
+    image: './images/monkey.png',
     unsei: '胎',
     description: `あなたのお子さんはわくわくサル。
 身の回りのすべてが宝物に見える、好奇心いっぱいの子。
@@ -371,6 +380,7 @@ const ANIMAL_TYPES = {
     id: 10,
     name: 'ひらめきリス',
     emoji: '🐿️',
+    image: './images/squirrel.png',
     unsei: '絶',
     description: `あなたのお子さんはひらめきリス。
 アイデアいっぱい、創造力あふれる発想家。
@@ -410,6 +420,7 @@ const ANIMAL_TYPES = {
     id: 11,
     name: 'ふんわりパンダ',
     emoji: '🐼',
+    image: './images/panda.png',
     unsei: '養',
     description: `あなたのお子さんはふんわりパンダ。
 いるだけで癒される、愛され上手な子。
@@ -448,6 +459,7 @@ const ANIMAL_TYPES = {
     id: 12,
     name: 'どうどうライオン',
     emoji: '🦁',
+    image: './images/lion.png',
     unsei: '帝旺',
     description: `あなたのお子さんはどうどうライオン。
 自分の意志をしっかり持つ、頼もしいリーダー。
